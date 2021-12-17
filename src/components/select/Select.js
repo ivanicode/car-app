@@ -2,13 +2,17 @@ import {useSelectHook} from './selectHook';
 
 export function Select() {
 
-    const {carMakes, onChangeHandler, carData, carModels, vehicles = []} = useSelectHook();
+    const {carMakes, onChangeHandler, carData, carModels, vehicles = [], errorMessage} = useSelectHook();
+
     let columns = [];
     if(vehicles?.length){
         columns = Object.keys(vehicles[0]);
     }
     return (
         <div>
+            <div style={{color: "red"}}>
+                <strong>{errorMessage}</strong>
+            </div>
             <label htmlFor='make'>Choose a make</label>
             <select name="makes" value={carData.make} onChange={onChangeHandler} id="make">
                 {carMakes?.map((carMake) => {
@@ -36,7 +40,7 @@ export function Select() {
                     <tbody>
                         {vehicles.map((row, index) => {
                             return (
-                                <tr key={(Math.floor(Math.random() * 100)) * Date.now()}>
+                                <tr key={index}>
                                     <td><input type="radio" name="vehicle" onClick={() => {alert(JSON.stringify(row))}} /></td>
                                     {columns.map((columnName) => (<td key={(Math.floor(Math.random() * 100)) * Date.now()+row[columnName]}>{row[columnName]}</td>))}
                                 </tr>

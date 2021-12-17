@@ -7,17 +7,20 @@ export function useSelectHook(){
         make: "",
         model: "",
     }
-
+    
     const [carData, setCarData] = useState(initialCarData)
 
-    const {data: carMakes} = useFetch("/api/makes")
+    const [readyForGetMakes, setReadyForGetMakes] = useState(true)
+    const {data: carMakes, error: carMakesError} = useFetch("/api/makes", readyForGetMakes)
 
     const [readyForGetModels, setReadyForGetModels] = useState(false)
     const {data: carModels} = useFetch(`/api/models?make=${carData.make}`, readyForGetModels)
 
     const [readyForGetVehicles, setReadyForGetVehicles] = useState(false)
-    const {data: vehicles} = useFetch(`/api/vehicles?make=${carData.make}&model=${carData.model}`, null, readyForGetVehicles)
-    
+    const {data: vehicles} = useFetch(`/api/vehicles?make=${carData.make}&model=${carData.model}`, readyForGetVehicles)
+
+    const [errorMessage, setErrorMessage] = useState("")
+
     useEffect(() => {
         if(carData.make){
             setReadyForGetModels(true)
@@ -26,6 +29,7 @@ export function useSelectHook(){
 
     useEffect(() => {
         setReadyForGetModels(false)
+        setReadyForGetMakes(false)
     }, [carMakes, carModels])
 
     useEffect(() => {
@@ -38,6 +42,12 @@ export function useSelectHook(){
         setReadyForGetVehicles(false)
     }, [vehicles])
 
+    useEffect(() => {
+        if(carMakesError){
+            setErrorMessage("Something went wrong! Please refresh")
+        }
+    }, [carMakesError])
+
     function onChangeHandler(event){
         const id = event.target.id;
         const value = event.target.value;
@@ -46,5 +56,5 @@ export function useSelectHook(){
         setCarData(newState);
     }
     
-    return {carMakes, onChangeHandler, carData, carModels, vehicles}
+    return {carMakes, onChangeHandler, carData, carModels, vehicles, errorMessage}
 }
