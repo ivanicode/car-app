@@ -59,11 +59,11 @@ function handleGet(req, res, data, filters) {
   if (req.method !== 'GET') {
     throw new HttpError(405);
   }
-  //it was mean!
-  /*const random = Math.random();
+  
+  const random = Math.random();
   if (random >= 0.8) {
     throw new HttpError(503);
-  }*/
+  }
 
   let filteredData = data;
   if (filters) {

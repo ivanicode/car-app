@@ -15,13 +15,14 @@ export function reducer(state, action) {
         case 'success':
             return { ...initialData, data: action.data };
         case 'error':
+            console.log(action.error)
             return { ...state, error: action.error, requesting: false };
         default:
             return state;
     }
 }
 
-export function useFetch(path, readyForMakeRequest = true, readyForVehicleRequest = true) {
+export function useFetch(path, readyForMakeRequest = true) {
     const [fetchState, dispatch] = useReducer(reducer, initialData);
     function makeRequest(){
         dispatch({ type: 'requesting' });
@@ -43,14 +44,6 @@ export function useFetch(path, readyForMakeRequest = true, readyForVehicleReques
         },
         [readyForMakeRequest]
     );
-    useEffect(
-        () => {
-            if(readyForVehicleRequest){
-                makeRequest()
-            }
-        }, 
-        [readyForVehicleRequest]
-    )
     return fetchState;
 }
 
