@@ -11,10 +11,10 @@ export function useSelectHook(){
     const [carData, setCarData] = useState(initialCarData)
 
     const {data: carMakes} = useFetch("/api/makes")
+
     const [readyForGetModels, setReadyForGetModels] = useState(false)
     const {data: carModels} = useFetch(`/api/models?make=${carData.make}`, readyForGetModels)
 
-    //const {dataForTable, setDataForTable} = useState([])
     const [readyForGetVehicles, setReadyForGetVehicles] = useState(false)
     const {data: vehicles} = useFetch(`/api/vehicles?make=${carData.make}&model=${carData.model}`, null, readyForGetVehicles)
     
@@ -48,6 +48,3 @@ export function useSelectHook(){
     
     return {carMakes, onChangeHandler, carData, carModels, vehicles}
 }
-
-//const {data: carModels} = useFetch(`/api/models?make=${choosenMake}`)
-//let modelsUrl = "/api/models?make=" + carData.make;
