@@ -1,0 +1,33 @@
+.selects {
+    display: flex;
+    justify-content: flex-start;
+    margin-bottom: 20px;
+}
+
+.makeSelect {
+    margin-right: 30px;
+}
+
+select {
+    background-color: rgb(109, 103, 182);
+    color: rgb(236, 234, 234);
+    margin-left: 10px;
+}
+
+table {
+    border: 1px solid rgba(187, 183, 243, 0.5);
+    border-radius: 10px;
+    padding: 10px;
+    background-color: rgba(255, 255, 255, 0.10);
+}
+
+td {
+    border: 1px solid rgba(187, 183, 243, 0.5);
+    border-radius: 5px;
+}
+
+th {
+    border: 1px solid rgba(27, 24, 66, 0.5);
+    border-radius: 5px;
+}
+
